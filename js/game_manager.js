@@ -9,6 +9,7 @@ function GameManager(size, InputManager, Actuator, ScoreManager,reset) {
   this.inputManager.on("move", this.move.bind(this));
   this.inputManager.on("restart", this.restart.bind(this));
   this.inputManager.on("reload",this.reload.bind(this));
+  this.inputManager.on("back",this.back.bind(this));
   this.inputManager.on("keepPlaying", this.keepPlaying.bind(this));
 
 
@@ -19,6 +20,12 @@ function GameManager(size, InputManager, Actuator, ScoreManager,reset) {
      this.setup(0,false,false,0);
       
   }
+}
+
+
+GameManager.prototype.back = function () {
+  this.actuator.continue();
+  this.setup(0,false,false,2);
 }
 
 GameManager.prototype.reload = function () {
@@ -48,28 +55,60 @@ GameManager.prototype.isGameTerminated = function () {
 
 // Set up the game
 GameManager.prototype.setup = function (score,won,keepPlaying,loadstate) {
-  if(loadstate == 0){ //init
-      this.grid  = new Grid(this.size,0);
-  } 
-  else{//load data
+  switch(loadstate){
+    case 2 :{
       this.grid = new Grid(this.size,1);
+    }
+    case 1:{
+      this.grid = new Grid(this.size,1);
+    }
+    default:{
+      this.grid = new Grid(this.size,0);
+    }
   }
+
+
   this.score       = score;
   this.over        = false;
   this.won         = won;
   this.keepPlaying = keepPlaying;
 
-  // Add the initial tiles
-  if(loadstate == 0){
-      this.addStartTiles();
+  
+   switch(loadstate){
+    case 2 :{
+      this.backTiles();    //backward
+    }
+    case 1:{
+      this.reloadTiles();  //load data
+    }
+    default:{
+      this.addStartTiles();  // Add the initial tiles
+    }
   }
-  else{
-      this.reloadTiles();
-  }
-
+ 
   // Update the actuator
   this.actuate();
 
+};
+
+
+GameManager.prototype.backTiles = function (){
+    var size = window.size;
+    var data = window.data;
+    console.log("in reloadTiles");
+    showState(size,data);
+    for(var i=0;i<size;i++){
+      for(var j=0;j<size;j++){
+        if(data[i][j]!=0){
+           var position = new Object();
+           position.x=i;
+           position.y=j;
+           var tile = new Tile(position,data[i][j]);        
+           this.grid.insertTile(tile);
+        }     
+      }
+    }
+    
 };
 
 //load data to reset game with
@@ -77,9 +116,11 @@ GameManager.prototype.reloadTiles = function (){
     var loaddata=JSON.parse(localStorage.gamedata);
     var loadsize = loaddata[0];
     var loadtile = loaddata[1];
+    copyData(loadtile,window.data,loaddata[0]);
+    copyData(loadtile,window.data_bak,loaddata[0]);
     console.log("in reloadTiles");
-    showState(loadsize,loadtile);
-  //  showState(window.size,window.data_bak);
+  //  showState(loadsize,loadtile);
+    showState(window.size,window.data_bak);
     for(var i=0;i<loadsize;i++){
       for(var j=0;j<loadsize;j++){
         if(loadtile[i][j]!=0){
@@ -91,10 +132,8 @@ GameManager.prototype.reloadTiles = function (){
         }     
       }
     }
-     copyData(loadtile,window.data,loaddata[0]);
-     copyData(loadtile,window.data_bak,loaddata[0]);
+    
 };
-
 
 
 // Set up the initial tiles to start the game with

@@ -4,11 +4,9 @@
 jQuery(document).ready(function(){
   	jQuery("#savebutton").click(function(){
  		showState(window.size,window.data);	
-//		showState(window.size,window.data_bak);	
+
 		var savedata= Array(window.size,window.data);
-//		size : window.size,
-//		data : window.data,
-//	};
+
 		savedata.size=window.size;
 		savedata.data=window.data;
 		localStorage.gamedata=JSON.stringify(savedata);

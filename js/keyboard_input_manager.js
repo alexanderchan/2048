@@ -50,7 +50,8 @@ KeyboardInputManager.prototype.listen = function () {
       }
 
       if (event.which === 32) self.restart.bind(self)(event);
-      if (event.which === 85) self.reload.bind(self)(event);
+      if (event.which === 85) self.reload.bind(self)(event);  // 'u'
+      if (event.which === 8)  self.back.bind(self)(event);     // backspace
     }
   });
 
@@ -61,6 +62,10 @@ KeyboardInputManager.prototype.listen = function () {
   var reload = document.querySelector("#loadbutton");
   reload.addEventListener("click",this.reload.bind(this));
   reload.addEventListener("touchend",this.reload.bind(this));
+
+  var back = document.querySelector("#backbutton");
+  back.addEventListener("click",this.back.bind(this));
+  back.addEventListener("touchend",this.back.bind(this));
 
   var keepPlaying = document.querySelector(".keep-playing-button");
   keepPlaying.addEventListener("click", this.keepPlaying.bind(this));
@@ -97,6 +102,12 @@ KeyboardInputManager.prototype.listen = function () {
     }
   });
 };
+
+KeyboardInputManager.prototype.back = function (event) {
+  event.preventDefault();
+  this.emit("back");
+}
+
 
 KeyboardInputManager.prototype.reload = function (event) {
   event.preventDefault();
