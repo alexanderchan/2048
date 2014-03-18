@@ -1,18 +1,6 @@
 
-function showState(size,data){
- 	var i = 0;
- 	var j = 0
- 	var string = '';
- 	console.log(size);
- 	for(i=0;i<size;i++){
- 		for(j=0;j<size;j++){
- 			string = string + ' ' + data[j][i];
- 		}
- 		console.log(string);
- 		string = '';
- 	}
-}
-	
+
+
 
 // to save data   *TO DO: test if localstorage is available
 jQuery(document).ready(function(){
@@ -37,12 +25,17 @@ jQuery(document).ready(function(){
   	jQuery("#loadbutton").click(function(){
   		if(typeof(localStorage.gamedata) != "undefined"){
   			console.log(localStorage.gamedata);
-  			var loaddata=JSON.parse(localStorage.gamedata)
+  			var loaddata=JSON.parse(localStorage.gamedata);
   			copyData(loaddata[1],window.data,loaddata[0]);
   			copyData(loaddata[1],window.data_bak,loaddata[0]);
   			showState(window.size,window.data);
-  	//		var t = new GameManager(var size=4,);  			
+
+  			window.requestAnimationFrame(function(){
+  				new GameManager(4, KeyboardInputManager, HTMLActuator, LocalScoreManager,1);
+  				console.log(Date());
+  			});
   		}
+
   		else{
   			alert("no data !");
   			console.log("data not found !");
@@ -70,4 +63,20 @@ function initData(size){
     		}
   	}
   	return data;
+}
+
+
+
+function showState(size,data){
+ 	var i = 0;
+ 	var j = 0
+ 	var string = '';
+ 	console.log(size);
+ 	for(i=0;i<size;i++){
+ 		for(j=0;j<size;j++){
+ 			string = string + ' ' + data[j][i];
+ 		}
+ 		console.log(string);
+ 		string = '';
+ 	}
 }
