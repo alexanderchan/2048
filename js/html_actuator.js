@@ -61,6 +61,7 @@ HTMLActuator.prototype.addTile = function (tile) {
 
   // We can't use classlist because it somehow glitches when replacing classes
   var classes = ["tile", "tile-" + tile.value, positionClass];
+//  console.log("now:"+tile.value+positionClass.toString());
 
   if (tile.value > 2048) classes.push("tile-super");
 
@@ -93,6 +94,9 @@ HTMLActuator.prototype.addTile = function (tile) {
 
   // Put the tile on the board
   this.tileContainer.appendChild(wrapper);
+
+ // record data state (by jerryjia)
+  copyData(window.data,window.data_bak,window.size);
 };
 
 HTMLActuator.prototype.applyClasses = function (element, classes) {
@@ -140,9 +144,9 @@ HTMLActuator.prototype.message = function (won) {
   this.messageContainer.classList.add(type);
   this.messageContainer.getElementsByTagName("p")[0].textContent = message;
 
-  this.clearContainer(this.sharingContainer);
-  this.sharingContainer.appendChild(this.scoreTweetButton());
-  twttr.widgets.load();
+ // this.clearContainer(this.sharingContainer);
+ // this.sharingContainer.appendChild(this.scoreTweetButton());
+ // twttr.widgets.load();
 };
 
 HTMLActuator.prototype.clearMessage = function () {
@@ -150,14 +154,14 @@ HTMLActuator.prototype.clearMessage = function () {
   this.messageContainer.classList.remove("game-won");
   this.messageContainer.classList.remove("game-over");
 };
-
+/*
 HTMLActuator.prototype.scoreTweetButton = function () {
   var tweet = document.createElement("a");
   tweet.classList.add("twitter-share-button");
   tweet.setAttribute("href", "https://twitter.com/share");
-  tweet.setAttribute("data-via", "gabrielecirulli");
-  tweet.setAttribute("data-url", "http://git.io/2048");
-  tweet.setAttribute("data-counturl", "http://gabrielecirulli.github.io/2048/");
+  tweet.setAttribute("data-via", "jerryjiahaha");
+  tweet.setAttribute("data-url", "http://jerryjiahaha.github.io/2048");
+  tweet.setAttribute("data-counturl", "http://jerryjiahaha.github.io/2048/");
   tweet.textContent = "Tweet";
 
   var text = "I scored " + this.score + " points at 2048, a game where you " +
@@ -166,3 +170,6 @@ HTMLActuator.prototype.scoreTweetButton = function () {
 
   return tweet;
 };
+*/
+
+

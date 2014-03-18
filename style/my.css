@@ -1,0 +1,12 @@
+.command{
+	text-align:right;
+}
+
+.button{
+	display: inline-table;
+	padding-left: 10px;
+}
+
+.button a:hover{
+	color:rgb(102, 204, 255);
+}

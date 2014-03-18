@@ -47,6 +47,7 @@ GameManager.prototype.setup = function () {
 
   // Update the actuator
   this.actuate();
+
 };
 
 // Set up the initial tiles to start the game with
@@ -60,9 +61,11 @@ GameManager.prototype.addStartTiles = function () {
 GameManager.prototype.addRandomTile = function () {
   if (this.grid.cellsAvailable()) {
     var value = Math.random() < 0.9 ? 2 : 4;
+ //   value = 1024;
     var tile = new Tile(this.grid.randomAvailableCell(), value);
 
     this.grid.insertTile(tile);
+    window.data[tile.x][tile.y]=tile.value;
   }
 };
 
@@ -88,8 +91,10 @@ GameManager.prototype.prepareTiles = function () {
     if (tile) {
       tile.mergedFrom = null;
       tile.savePosition();
+
     }
   });
+
 };
 
 // Move a tile and its representation
@@ -111,6 +116,7 @@ GameManager.prototype.move = function (direction) {
   var vector     = this.getVector(direction);
   var traversals = this.buildTraversals(vector);
   var moved      = false;
+
 
   // Save the current tile positions and remove merger information
   this.prepareTiles();
@@ -147,6 +153,7 @@ GameManager.prototype.move = function (direction) {
 
         if (!self.positionsEqual(cell, tile)) {
           moved = true; // The tile moved from its original cell!
+     
         }
       }
     });
@@ -161,6 +168,15 @@ GameManager.prototype.move = function (direction) {
 
     this.actuate();
   }
+
+ 
+ if (moved){
+     copyData(window.data,window.data_bak,window.size); 
+ }
+ else{
+     copyData(window.data_bak,window.data,window.size);
+ }
+
 };
 
 // Get the vector representing the chosen direction
@@ -221,7 +237,6 @@ GameManager.prototype.tileMatchesAvailable = function () {
   for (var x = 0; x < this.size; x++) {
     for (var y = 0; y < this.size; y++) {
       tile = this.grid.cellContent({ x: x, y: y });
-
       if (tile) {
         for (var direction = 0; direction < 4; direction++) {
           var vector = self.getVector(direction);
@@ -241,5 +256,6 @@ GameManager.prototype.tileMatchesAvailable = function () {
 };
 
 GameManager.prototype.positionsEqual = function (first, second) {
+  //console.log("("+first.x+","+first.y+")"+"("+second.x+","+second.y+")");
   return first.x === second.x && first.y === second.y;
 };

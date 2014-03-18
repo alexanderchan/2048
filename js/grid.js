@@ -1,9 +1,20 @@
 function Grid(size) {
   this.size = size;
 
+// add global data
+    window.data = null;
+    window.data_bak = null;
+    window.size = this.size;
+    window.data=initData(this.size)
+    window.data_bak=initData(this.size);
+  //end
+
+
   this.cells = [];
 
   this.build();
+
+
 }
 
 // Build a grid of the specified size
@@ -30,8 +41,14 @@ Grid.prototype.availableCells = function () {
   var cells = [];
 
   this.eachCell(function (x, y, tile) {
+  //  console.log("("+x+","+y+")");
     if (!tile) {
       cells.push({ x: x, y: y });
+    }
+    else{
+
+          window.data[tile.x][tile.y]=tile.value;
+
     }
   });
 
