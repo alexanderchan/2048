@@ -1,14 +1,16 @@
-function Grid(size) {
+function Grid(size,state) {
   this.size = size;
 
 // add global data
-    window.data = null;
-    window.data_bak = null;
-    window.size = this.size;
-    window.data=initData(this.size)
-    window.data_bak=initData(this.size);
+  if(state == 0){
+      window.data = null;
+      window.data_bak = null;
+      window.size = this.size;
+      window.data=initData(this.size)
+      window.data_bak=initData(this.size);
+    }
   //end
-
+ 
 
   this.cells = [];
 
@@ -88,7 +90,9 @@ Grid.prototype.cellContent = function (cell) {
 
 // Inserts a tile at its position
 Grid.prototype.insertTile = function (tile) {
+  
   this.cells[tile.x][tile.y] = tile;
+
 };
 
 Grid.prototype.removeTile = function (tile) {

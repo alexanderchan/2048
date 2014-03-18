@@ -8,10 +8,12 @@ function GameManager(size, InputManager, Actuator, ScoreManager,reset) {
 
   this.inputManager.on("move", this.move.bind(this));
   this.inputManager.on("restart", this.restart.bind(this));
+  this.inputManager.on("reload",this.reload.bind(this));
   this.inputManager.on("keepPlaying", this.keepPlaying.bind(this));
 
+
   if(reset != 0 && jQuery.type(reset) != "undefined"){
-      this.setup(0,false,false,1);
+      this.reload();
   }
   else{  //first time,init ,setup
      this.setup(0,false,false,0);
@@ -19,12 +21,15 @@ function GameManager(size, InputManager, Actuator, ScoreManager,reset) {
   }
 }
 
-
+GameManager.prototype.reload = function () {
+  this.actuator.continue();
+  this.setup(0,false,false,1);
+}
 
 // Restart the game
 GameManager.prototype.restart = function () {
   this.actuator.continue();
-  this.setup();
+  this.setup(0,false,false,0);
 };
 
 // Keep playing after winning
@@ -43,8 +48,12 @@ GameManager.prototype.isGameTerminated = function () {
 
 // Set up the game
 GameManager.prototype.setup = function (score,won,keepPlaying,loadstate) {
-  this.grid        = new Grid(this.size);
-
+  if(loadstate == 0){ //init
+      this.grid  = new Grid(this.size,0);
+  } 
+  else{//load data
+      this.grid = new Grid(this.size,1);
+  }
   this.score       = score;
   this.over        = false;
   this.won         = won;
@@ -66,19 +75,24 @@ GameManager.prototype.setup = function (score,won,keepPlaying,loadstate) {
 //load data to reset game with
 GameManager.prototype.reloadTiles = function (){
     var loaddata=JSON.parse(localStorage.gamedata);
-    loadsize = loaddata[0];
-    loadtile = loaddata[1];
+    var loadsize = loaddata[0];
+    var loadtile = loaddata[1];
+    console.log("in reloadTiles");
+    showState(loadsize,loadtile);
+  //  showState(window.size,window.data_bak);
     for(var i=0;i<loadsize;i++){
       for(var j=0;j<loadsize;j++){
-        var position = new Object();
-        position.x=i;
-        position.y=j;
-        var tile = new Tile(position,loadtile[i][j]);
-        position = null;
-        this.grid.insertTile(tile);
-   //     window.data[tile.x][tile.y]=tile.value;
+        if(loadtile[i][j]!=0){
+           var position = new Object();
+           position.x=i;
+           position.y=j;
+           var tile = new Tile(position,loadtile[i][j]);        
+           this.grid.insertTile(tile);
+        }     
       }
     }
+     copyData(loadtile,window.data,loaddata[0]);
+     copyData(loadtile,window.data_bak,loaddata[0]);
 };
 
 

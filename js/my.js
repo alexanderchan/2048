@@ -1,7 +1,5 @@
 
 
-
-
 // to save data   *TO DO: test if localstorage is available
 jQuery(document).ready(function(){
   	jQuery("#savebutton").click(function(){
@@ -20,20 +18,21 @@ jQuery(document).ready(function(){
 });
 
 
+/*
 //to load data
 jQuery(document).ready(function(){
   	jQuery("#loadbutton").click(function(){
   		if(typeof(localStorage.gamedata) != "undefined"){
   			console.log(localStorage.gamedata);
   			var loaddata=JSON.parse(localStorage.gamedata);
-  			copyData(loaddata[1],window.data,loaddata[0]);
-  			copyData(loaddata[1],window.data_bak,loaddata[0]);
-  			showState(window.size,window.data);
+  		//	copyData(loaddata[1],window.data,loaddata[0]);
+  		//	copyData(loaddata[1],window.data_bak,loaddata[0]);
+  		//	showState(window.size,window.data);
 
-  			window.requestAnimationFrame(function(){
-  				new GameManager(4, KeyboardInputManager, HTMLActuator, LocalScoreManager,1);
-  				console.log(Date());
-  			});
+  		//	window.requestAnimationFrame(function(){
+  			//var reload = 	new GameManager(loaddata[0], KeyboardInputManager, HTMLActuator, LocalScoreManager,1);
+      // reload.restart(); 
+  		//	});
   		}
 
   		else{
@@ -42,7 +41,7 @@ jQuery(document).ready(function(){
   		}
   	});
 });
-
+*/
 
 
 function copyData(data1,data2,size){

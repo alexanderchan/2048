@@ -50,12 +50,17 @@ KeyboardInputManager.prototype.listen = function () {
       }
 
       if (event.which === 32) self.restart.bind(self)(event);
+      if (event.which === 85) self.reload.bind(self)(event);
     }
   });
 
   var retry = document.querySelector(".retry-button");
   retry.addEventListener("click", this.restart.bind(this));
   retry.addEventListener("touchend", this.restart.bind(this));
+
+  var reload = document.querySelector("#loadbutton");
+  reload.addEventListener("click",this.reload.bind(this));
+  reload.addEventListener("touchend",this.reload.bind(this));
 
   var keepPlaying = document.querySelector(".keep-playing-button");
   keepPlaying.addEventListener("click", this.keepPlaying.bind(this));
@@ -92,6 +97,11 @@ KeyboardInputManager.prototype.listen = function () {
     }
   });
 };
+
+KeyboardInputManager.prototype.reload = function (event) {
+  event.preventDefault();
+  this.emit("reload");
+}
 
 KeyboardInputManager.prototype.restart = function (event) {
   event.preventDefault();
