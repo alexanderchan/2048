@@ -58,9 +58,11 @@ GameManager.prototype.setup = function (score,won,keepPlaying,loadstate) {
   switch(loadstate){
     case 2 :{
       this.grid = new Grid(this.size,1);
+      break;
     }
     case 1:{
       this.grid = new Grid(this.size,1);
+      break;
     }
     default:{
       this.grid = new Grid(this.size,0);
@@ -77,9 +79,12 @@ GameManager.prototype.setup = function (score,won,keepPlaying,loadstate) {
    switch(loadstate){
     case 2 :{
       this.backTiles();    //backward
+      break;
     }
     case 1:{
+      console.log("here");
       this.reloadTiles();  //load data
+      break;
     }
     default:{
       this.addStartTiles();  // Add the initial tiles
@@ -94,7 +99,9 @@ GameManager.prototype.setup = function (score,won,keepPlaying,loadstate) {
 
 GameManager.prototype.backTiles = function (){
     var size = window.size;
-    var data = window.data;
+    var data = window.olddata;
+    copyData(window.olddata,window.data,window.size);
+    copyData(window.olddata,window.data_bak,window.size);
     console.log("in reloadTiles");
     showState(size,data);
     for(var i=0;i<size;i++){
@@ -152,6 +159,7 @@ GameManager.prototype.addRandomTile = function () {
 
     this.grid.insertTile(tile);
     window.data[tile.x][tile.y]=tile.value;
+    window.olddata[tile.x][tile.y]=tile.value;
   }
 };
 
@@ -192,6 +200,7 @@ GameManager.prototype.moveTile = function (tile, cell) {
 
 // Move tiles on the grid in the specified direction
 GameManager.prototype.move = function (direction) {
+ // copyData(window.data,window.olddata,window.size);
   // 0: up, 1: right, 2:down, 3: left
   var self = this;
 
@@ -210,6 +219,7 @@ GameManager.prototype.move = function (direction) {
   // Traverse the grid in the right direction and move tiles
   traversals.x.forEach(function (x) {
     traversals.y.forEach(function (y) {
+      console.log(x+","+y);
       cell = { x: x, y: y };
       tile = self.grid.cellContent(cell);
 
@@ -257,6 +267,7 @@ GameManager.prototype.move = function (direction) {
 
  
  if (moved){
+     copyData(window.data_bak,window.olddata,window.size);
      copyData(window.data,window.data_bak,window.size); 
  }
  else{

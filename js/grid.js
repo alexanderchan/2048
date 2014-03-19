@@ -8,6 +8,7 @@ function Grid(size,state) {
       window.size = this.size;
       window.data=initData(this.size)
       window.data_bak=initData(this.size);
+      window.olddata=initData(this.size);
     }
   //end
  
@@ -90,7 +91,7 @@ Grid.prototype.cellContent = function (cell) {
 
 // Inserts a tile at its position
 Grid.prototype.insertTile = function (tile) {
-  
+
   this.cells[tile.x][tile.y] = tile;
 
 };
