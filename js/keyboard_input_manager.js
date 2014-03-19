@@ -49,15 +49,20 @@ KeyboardInputManager.prototype.listen = function () {
         self.emit("move", mapped);
       }
 
-      if (event.which === 32) self.restart.bind(self)(event);
+      if (event.which === 32) self.restart.bind(self)(event);  
       if (event.which === 85) self.reload.bind(self)(event);  // 'u'
       if (event.which === 8)  self.back.bind(self)(event);     // backspace
+      if (event.which === 81) self.save.bind(self)(event); // 'q'
     }
   });
 
   var retry = document.querySelector(".retry-button");
   retry.addEventListener("click", this.restart.bind(this));
   retry.addEventListener("touchend", this.restart.bind(this));
+
+  var save = document.querySelector("#savebutton");
+  save.addEventListener("click",this.save.bind(this));
+  save.addEventListener("touchend",this.save.bind(this));
 
   var reload = document.querySelector("#loadbutton");
   reload.addEventListener("click",this.reload.bind(this));
@@ -123,3 +128,8 @@ KeyboardInputManager.prototype.keepPlaying = function (event) {
   event.preventDefault();
   this.emit("keepPlaying");
 };
+
+KeyboardInputManager.prototype.save = function (event) {
+  event.preventDefault();
+  this.emit("save");
+}

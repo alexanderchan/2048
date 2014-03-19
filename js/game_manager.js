@@ -11,11 +11,13 @@ function GameManager(size, InputManager, Actuator, ScoreManager,reset) {
   this.inputManager.on("reload",this.reload.bind(this));
   this.inputManager.on("back",this.back.bind(this));
   this.inputManager.on("keepPlaying", this.keepPlaying.bind(this));
+  this.inputManager.on("save",this.save.bind(this));
 
   this.loadsize = 0;
   this.loadtile = new Array(this.size);
   this.loadscore = 0;
-
+ // this.loadlock = 0;
+  this.backlock = 0;
 
   if(reset != 0 && jQuery.type(reset) != "undefined"){
       this.reload();
@@ -27,31 +29,44 @@ function GameManager(size, InputManager, Actuator, ScoreManager,reset) {
 }
 
 
+GameManager.prototype.save = function () {
+  var savedata= Array(window.size,window.data,window.oldscore);
+  localStorage.gamedata=JSON.stringify(savedata);
+  console.log(JSON.stringify(savedata));
+  console.log(window.oldscore);
+}
+
 GameManager.prototype.back = function () {
-  this.actuator.continue();
-  this.setup(window.oldscore,false,false,2);
+  if(this.backlock == 0){    
+    this.actuator.continue();
+    this.setup(window.oldscore,false,false,2);
+    this.backlock = 1;
+  }
 }
 
 GameManager.prototype.reload = function () {
-  this.actuator.continue();
-  loaddata=JSON.parse(localStorage.gamedata);
-  this.loadsize = loaddata[0];
-  this.loadtile = loaddata[1];
-  this.loadscore = loaddata[2];
-  console.log("load score: "+this.loadscore);
-  this.setup(this.loadscore,false,false,1);
+    this.backlock = 0;
+    this.actuator.continue();
+    loaddata=JSON.parse(localStorage.gamedata);
+    this.loadsize = loaddata[0];
+    this.loadtile = loaddata[1];
+    this.loadscore = loaddata[2];
+    console.log("load score: "+this.loadscore);
+    this.setup(this.loadscore,false,false,1);
 }
 
 // Restart the game
 GameManager.prototype.restart = function () {
   this.actuator.continue();
   this.setup(0,false,false,0);
+  this.backlock = 0;
 };
 
 // Keep playing after winning
 GameManager.prototype.keepPlaying = function () {
   this.keepPlaying = true;
   this.actuator.continue();
+  this.backlock = 0;
 };
 
 GameManager.prototype.isGameTerminated = function () {
@@ -218,7 +233,7 @@ GameManager.prototype.move = function (direction) {
   var traversals = this.buildTraversals(vector);
   var moved      = false;
 
-
+  this.backlock = 0;
   // Save the current tile positions and remove merger information
   this.prepareTiles();
 

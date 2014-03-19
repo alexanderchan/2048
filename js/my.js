@@ -1,4 +1,4 @@
-
+/*
 // to save data   *TO DO: test if localstorage is available
 jQuery(document).ready(function(){
   	jQuery("#savebutton").click(function(){
@@ -16,7 +16,7 @@ jQuery(document).ready(function(){
 	//	savedata=null;
   	});
 });
-
+*/
 
 /*
 //to load data
