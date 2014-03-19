@@ -3,6 +3,8 @@ function Grid(size,state) {
 
 // add global data
   if(state == 0){
+      window.curscore = 0;
+      window.oldscore = 0; 
       window.data = null;
       window.data_bak = null;
       window.size = this.size;

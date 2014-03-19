@@ -1,16 +1,18 @@
 
-
 // to save data   *TO DO: test if localstorage is available
 jQuery(document).ready(function(){
   	jQuery("#savebutton").click(function(){
  		showState(window.size,window.data);	
 
-		var savedata= Array(window.size,window.data);
+		var savedata= Array(window.size,window.data,window.oldscore);
 
-		savedata.size=window.size;
-		savedata.data=window.data;
+	//	savedata.size=window.size;
+	//	savedata.data=window.data;
+ //    savedata.score=window.oldscore;
+ 
 		localStorage.gamedata=JSON.stringify(savedata);
 		console.log(JSON.stringify(savedata));
+    console.log(window.oldscore);
 	//	savedata=null;
   	});
 });

@@ -5,10 +5,12 @@
 .button{
 	display: inline-table;
 	padding-left: 10px;
+	
 }
 
 .button  a:link  { 
 	text-decoration: none;
+	border: 2px;
 }
 
 .button  a:hover{

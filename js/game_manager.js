@@ -12,6 +12,10 @@ function GameManager(size, InputManager, Actuator, ScoreManager,reset) {
   this.inputManager.on("back",this.back.bind(this));
   this.inputManager.on("keepPlaying", this.keepPlaying.bind(this));
 
+  this.loadsize = 0;
+  this.loadtile = new Array(this.size);
+  this.loadscore = 0;
+
 
   if(reset != 0 && jQuery.type(reset) != "undefined"){
       this.reload();
@@ -25,11 +29,15 @@ function GameManager(size, InputManager, Actuator, ScoreManager,reset) {
 
 GameManager.prototype.back = function () {
   this.actuator.continue();
-  this.setup(0,false,false,2);
+  this.setup(this.score,false,false,2);
 }
 
 GameManager.prototype.reload = function () {
   this.actuator.continue();
+  loaddata=JSON.parse(localStorage.gamedata);
+  this.loadsize = loaddata[0];
+  this.loadtile = loaddata[1];
+  this.loadscore = loaddata[2];
   this.setup(0,false,false,1);
 }
 
@@ -56,15 +64,15 @@ GameManager.prototype.isGameTerminated = function () {
 // Set up the game
 GameManager.prototype.setup = function (score,won,keepPlaying,loadstate) {
   switch(loadstate){
-    case 2 :{
+    case 2 :{ //back
       this.grid = new Grid(this.size,1);
       break;
     }
-    case 1:{
+    case 1:{  //load
       this.grid = new Grid(this.size,1);
       break;
     }
-    default:{
+    default:{ //start
       this.grid = new Grid(this.size,0);
     }
   }
@@ -82,7 +90,6 @@ GameManager.prototype.setup = function (score,won,keepPlaying,loadstate) {
       break;
     }
     case 1:{
-      console.log("here");
       this.reloadTiles();  //load data
       break;
     }
@@ -120,21 +127,19 @@ GameManager.prototype.backTiles = function (){
 
 //load data to reset game with
 GameManager.prototype.reloadTiles = function (){
-    var loaddata=JSON.parse(localStorage.gamedata);
-    var loadsize = loaddata[0];
-    var loadtile = loaddata[1];
-    copyData(loadtile,window.data,loaddata[0]);
-    copyData(loadtile,window.data_bak,loaddata[0]);
+
+    copyData(this.loadtile,window.data,this.loadsize);
+    copyData(this.loadtile,window.data_bak,this.loadsize);
     console.log("in reloadTiles");
   //  showState(loadsize,loadtile);
     showState(window.size,window.data_bak);
-    for(var i=0;i<loadsize;i++){
-      for(var j=0;j<loadsize;j++){
-        if(loadtile[i][j]!=0){
+    for(var i=0;i<this.loadsize;i++){
+      for(var j=0;j<this.loadsize;j++){
+        if(this.loadtile[i][j]!=0){
            var position = new Object();
            position.x=i;
            position.y=j;
-           var tile = new Tile(position,loadtile[i][j]);        
+           var tile = new Tile(position,this.loadtile[i][j]);        
            this.grid.insertTile(tile);
         }     
       }
