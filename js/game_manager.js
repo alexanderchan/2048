@@ -29,7 +29,7 @@ function GameManager(size, InputManager, Actuator, ScoreManager,reset) {
 
 GameManager.prototype.back = function () {
   this.actuator.continue();
-  this.setup(this.score,false,false,2);
+  this.setup(window.oldscore,false,false,2);
 }
 
 GameManager.prototype.reload = function () {
@@ -38,7 +38,8 @@ GameManager.prototype.reload = function () {
   this.loadsize = loaddata[0];
   this.loadtile = loaddata[1];
   this.loadscore = loaddata[2];
-  this.setup(0,false,false,1);
+  console.log("load score: "+this.loadscore);
+  this.setup(this.loadscore,false,false,1);
 }
 
 // Restart the game
