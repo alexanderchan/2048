@@ -1,4 +1,12 @@
-.command{
+h1.title{
+	font-size: 50px;
+}
+
+h1:hover{
+	color:rgb(114, 255, 102);
+}
+
+.command {
 	text-align:right;
 }
 
@@ -18,3 +26,8 @@
 	text-decoration : none;
 }
 
+.game-extra li{
+	list-style: none;
+	padding:0;
+	margin: 0;
+}

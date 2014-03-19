@@ -30,7 +30,7 @@ function GameManager(size, InputManager, Actuator, ScoreManager,reset) {
 
 
 GameManager.prototype.save = function () {
-  var savedata= Array(window.size,window.data,window.oldscore);
+  var savedata= Array(window.size,window.data,window.curscore);
   localStorage.gamedata=JSON.stringify(savedata);
   console.log(JSON.stringify(savedata));
   console.log(window.oldscore);
