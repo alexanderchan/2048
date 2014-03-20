@@ -8,6 +8,7 @@ function GameManager(size, InputManager, Actuator, ScoreManager,reset) {
 
   this.inputManager.on("move", this.move.bind(this));
   this.inputManager.on("restart", this.restart.bind(this));
+
   this.inputManager.on("reload",this.reload.bind(this));
   this.inputManager.on("back",this.back.bind(this));
   this.inputManager.on("keepPlaying", this.keepPlaying.bind(this));
@@ -32,8 +33,8 @@ function GameManager(size, InputManager, Actuator, ScoreManager,reset) {
 GameManager.prototype.save = function () {
   var savedata= Array(window.size,window.data,window.curscore);
   localStorage.gamedata=JSON.stringify(savedata);
-  console.log(JSON.stringify(savedata));
-  console.log(window.oldscore);
+//  console.log(JSON.stringify(savedata));
+// console.log(window.oldscore);
 }
 
 GameManager.prototype.back = function () {
@@ -51,7 +52,7 @@ GameManager.prototype.reload = function () {
     this.loadsize = loaddata[0];
     this.loadtile = loaddata[1];
     this.loadscore = loaddata[2];
-    console.log("load score: "+this.loadscore);
+//    console.log("load score: "+this.loadscore);
     this.setup(this.loadscore,false,false,1);
 }
 
@@ -125,8 +126,8 @@ GameManager.prototype.backTiles = function (){
     var data = window.olddata;
     copyData(window.olddata,window.data,window.size);
     copyData(window.olddata,window.data_bak,window.size);
-    console.log("in reloadTiles");
-    showState(size,data);
+//    console.log("in reloadTiles");
+//    showState(size,data);
     for(var i=0;i<size;i++){
       for(var j=0;j<size;j++){
         if(data[i][j]!=0){
@@ -146,9 +147,9 @@ GameManager.prototype.reloadTiles = function (){
 
     copyData(this.loadtile,window.data,this.loadsize);
     copyData(this.loadtile,window.data_bak,this.loadsize);
-    console.log("in reloadTiles");
+  //  console.log("in reloadTiles");
   //  showState(loadsize,loadtile);
-    showState(window.size,window.data_bak);
+ //   showState(window.size,window.data_bak);
     for(var i=0;i<this.loadsize;i++){
       for(var j=0;j<this.loadsize;j++){
         if(this.loadtile[i][j]!=0){
@@ -240,7 +241,7 @@ GameManager.prototype.move = function (direction) {
   // Traverse the grid in the right direction and move tiles
   traversals.x.forEach(function (x) {
     traversals.y.forEach(function (y) {
-      console.log(x+","+y);
+     console.log(x+","+y);
       cell = { x: x, y: y };
       tile = self.grid.cellContent(cell);
 

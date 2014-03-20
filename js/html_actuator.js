@@ -114,13 +114,13 @@ HTMLActuator.prototype.positionClass = function (position) {
 
 HTMLActuator.prototype.updateScore = function (score) {
   this.clearContainer(this.scoreContainer); 
-  console.log("score: "+this.score+","+score); //log:score
+//  console.log("score: "+this.score+","+score); //log:score
   if(window.oldscore != window.curscore){
     window.oldscore = window.curscore;
   }
   window.curscore = score;
-  console.log("now cur score: "+window.curscore);
-  console.log("now old score: "+window.oldscore);
+//  console.log("now cur score: "+window.curscore);
+//  console.log("now old score: "+window.oldscore);
   
   var difference = score - this.score;
   this.score = score;

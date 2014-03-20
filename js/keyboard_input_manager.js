@@ -56,6 +56,10 @@ KeyboardInputManager.prototype.listen = function () {
     }
   });
 
+  var restart = document.querySelector("#restartbutton");
+  restart.addEventListener("click", this.restart.bind(this));
+  restart.addEventListener("touchend", this.restart.bind(this));
+
   var retry = document.querySelector(".retry-button");
   retry.addEventListener("click", this.restart.bind(this));
   retry.addEventListener("touchend", this.restart.bind(this));
