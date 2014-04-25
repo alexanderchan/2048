@@ -13,6 +13,7 @@ function GameManager(size, InputManager, Actuator, ScoreManager,reset) {
   this.inputManager.on("back",this.back.bind(this));
   this.inputManager.on("keepPlaying", this.keepPlaying.bind(this));
   this.inputManager.on("save",this.save.bind(this));
+  this.inputManager.on("initForH",this.initForH.bind(this));
 
   this.loadsize = 0;
   this.loadtile = new Array(this.size);
@@ -33,7 +34,7 @@ function GameManager(size, InputManager, Actuator, ScoreManager,reset) {
 GameManager.prototype.save = function () {
   var savedata= Array(window.size,window.data,window.curscore);
   localStorage.gamedata=JSON.stringify(savedata);
-//  console.log(JSON.stringify(savedata));
+  console.log(JSON.stringify(savedata));
 // console.log(window.oldscore);
 }
 
@@ -43,6 +44,18 @@ GameManager.prototype.back = function () {
     this.setup(window.oldscore,false,false,2);
     this.backlock = 1;
   }
+}
+
+GameManager.prototype.initForH = function () {
+    this.backlock = 0;
+    this.actuator.continue();
+    //loaddata=JSON.parse(localStorage.gamedata);
+    loaddata = [4,[[2,0,0,0],[2048,0,0,2],[4096,0,0,0],[4096,8,2,0]],100224];
+    this.loadsize = loaddata[0];
+    this.loadtile = loaddata[1];
+    this.loadscore = loaddata[2];
+//    console.log("load score: "+this.loadscore);
+    this.setup(this.loadscore,false,false,1);
 }
 
 GameManager.prototype.reload = function () {

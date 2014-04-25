@@ -80,6 +80,10 @@ KeyboardInputManager.prototype.listen = function () {
   keepPlaying.addEventListener("click", this.keepPlaying.bind(this));
   keepPlaying.addEventListener("touchend", this.keepPlaying.bind(this));
 
+  var inith = document.querySelector("#inith");
+  reload.addEventListener("click",this.inith.bind(this));
+  reload.addEventListener("touchend",this.inith.bind(this));
+
   // Listen to swipe events
   var touchStartClientX, touchStartClientY;
   var gameContainer = document.getElementsByClassName("game-container")[0];
@@ -136,4 +140,9 @@ KeyboardInputManager.prototype.keepPlaying = function (event) {
 KeyboardInputManager.prototype.save = function (event) {
   event.preventDefault();
   this.emit("save");
+}
+
+KeyboardInputManager.prototype.inith = function (event) {
+  event.preventDefault();
+  this.emit("initForH");
 }
