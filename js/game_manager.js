@@ -26,7 +26,6 @@ function GameManager(size, InputManager, Actuator, ScoreManager,reset) {
   }
   else{  //first time,init ,setup
      this.setup(0,false,false,0);
-      
   }
 }
 
@@ -50,7 +49,7 @@ GameManager.prototype.initForH = function () {
     this.backlock = 0;
     this.actuator.continue();
     //loaddata=JSON.parse(localStorage.gamedata);
-    loaddata = [4,[[2,0,0,0],[2048,0,0,2],[4096,0,0,0],[4096,8,2,0]],100224];
+    var = [4,[[32768,4096,0,0],[32768,4096,0,2],[32768,0,0,0],[32768,8,2,0]],100224];
     this.loadsize = loaddata[0];
     this.loadtile = loaddata[1];
     this.loadscore = loaddata[2];
