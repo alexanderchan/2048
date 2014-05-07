@@ -49,7 +49,7 @@ GameManager.prototype.initForH = function () {
     this.backlock = 0;
     this.actuator.continue();
     //loaddata=JSON.parse(localStorage.gamedata);
-    var = [4,[[32768,4096,0,0],[32768,4096,0,2],[32768,0,0,0],[32768,8,2,0]],100224];
+    var = [4,[[0,4096,0,0],[0,4096,0,2],[16384,0,0,0],[32768,8,2,0]],100224];
     this.loadsize = loaddata[0];
     this.loadtile = loaddata[1];
     this.loadscore = loaddata[2];
