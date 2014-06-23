@@ -12,7 +12,20 @@
   <div ng-controller="someTestCtrl">
     {{testMessage}} 
   </div>
-  
+  <input type="hidden" id="e20" style="width:200px">
+  <link rel="//cdnjs.cloudflare.com/ajax/libs/select2/3.4.8/select2.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/select2/3.4.8/select2.js"></script>
   <script src="app.js"></script>
+  
+  <script>
+    $(function(){
+      
+        $("#e20").select2({
+                      tags:["red", "green", "blue"],
+                      tokenSeparators: [",", " "]});
+      
+      });
+    
+  </script>
 </body>
 </html>
