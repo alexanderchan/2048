@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html ng-app="SimpleApp">
 <head>
-  <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
   <meta name="description" content="Select2"/>
+  <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
   <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.4/angular.min.js"></script> 
-  
+  <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 <meta charset=utf-8 />
 <title>JS Bin</title>
 </head>
@@ -12,17 +12,23 @@
   <div ng-controller="someTestCtrl">
     {{testMessage}} 
   </div>
-  <input type="hidden" id="e20" style="width:200px">
-  <link rel="//cdnjs.cloudflare.com/ajax/libs/select2/3.4.8/select2.css">
+  <input type="hidden" id="e20" value="brown" style="width:200px">
+  <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/select2/3.4.8/select2.css">
   <script src="//cdnjs.cloudflare.com/ajax/libs/select2/3.4.8/select2.js"></script>
-  <script src="app.js"></script>
+  <script src="./app.js"></script>
   
   <script>
     $(function(){
       
-        $("#e20").select2({
+        var e20 = $("#e20")
+        
+        e20.select2({
                       tags:["red", "green", "blue"],
-                      tokenSeparators: [",", " "]});
+                      tokenSeparators: [",", " "]})
+                .on('change',function(e){
+                    console.log('Trying to focus');
+                    window.setTimeout(function(){$(e20).focus();},0);
+                    });
       
       });
     
